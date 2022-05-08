@@ -7,7 +7,7 @@ import nc from 'next-connect';
 const handler = nc();
 
 handler.get(async (req, res) => {
-  return res.send({ message: 'already seeded' });
+  res.send({ message: 'already seeded' });
   // await db.connect();
   // await User.deleteMany();
   // await User.insertMany(data.users);
@@ -15,6 +15,7 @@ handler.get(async (req, res) => {
   // await Product.insertMany(data.products);
   // await db.disconnect();
   // res.send({ message: 'seeded successfully' });
+  return
 });
 
 export default handler;
