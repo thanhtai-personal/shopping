@@ -17,6 +17,16 @@ import {
 } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 
+const lang = {
+  'Payment method is required': 'Payment method is required',
+  'Payment Method': 'Payment Method',
+  PayPal: 'PayPal',
+  Stripe: 'Stripe',
+  Cash: 'Cash',
+  Continue: 'Continue',
+  Back: 'Back'
+}
+
 export default function Payment() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const classes = useStyles();
@@ -37,7 +47,7 @@ export default function Payment() {
     closeSnackbar();
     e.preventDefault();
     if (!paymentMethod) {
-      enqueueSnackbar('Payment method is required', { variant: 'error' });
+      enqueueSnackbar(lang['Payment method is required'], { variant: 'error' });
     } else {
       dispatch({ type: 'SAVE_PAYMENT_METHOD', payload: paymentMethod });
       Cookies.set('paymentMethod', paymentMethod);
@@ -45,33 +55,33 @@ export default function Payment() {
     }
   };
   return (
-    <Layout title="Payment Method">
+    <Layout title={lang["Payment Method"]}>
       <CheckoutWizard activeStep={2}></CheckoutWizard>
       <form className={classes.form} onSubmit={submitHandler}>
         <Typography component="h1" variant="h1">
-          Payment Method
+          {lang['Payment Method']}
         </Typography>
         <List>
           <ListItem>
             <FormControl component="fieldset">
               <RadioGroup
-                aria-label="Payment Method"
+                aria-label={lang['Payment Method']}
                 name="paymentMethod"
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
               >
                 <FormControlLabel
-                  label="PayPal"
+                  label={lang["PayPal"]}
                   value="PayPal"
                   control={<Radio />}
                 ></FormControlLabel>
                 <FormControlLabel
-                  label="Stripe"
+                  label={lang.Stripe}
                   value="Stripe"
                   control={<Radio />}
                 ></FormControlLabel>
                 <FormControlLabel
-                  label="Cash"
+                  label={lang.Cash}
                   value="Cash"
                   control={<Radio />}
                 ></FormControlLabel>
@@ -80,7 +90,7 @@ export default function Payment() {
           </ListItem>
           <ListItem>
             <Button fullWidth type="submit" variant="contained" color="primary">
-              Continue
+              {lang.Continue}
             </Button>
           </ListItem>
           <ListItem>
@@ -90,7 +100,7 @@ export default function Payment() {
               variant="contained"
               onClick={() => router.push('/shipping')}
             >
-              Back
+              {lang.Back}
             </Button>
           </ListItem>
         </List>

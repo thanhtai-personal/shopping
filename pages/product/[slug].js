@@ -23,6 +23,25 @@ import { getError } from '../../utils/error';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 
+const lang = {
+  'Product Not Found': 'Product Not Found',
+  'Sorry. Product is out of stock': 'Sorry. Product is out of stock',
+  'back to products': 'back to products',
+  Category: 'Category',
+  Brand: 'Brand',
+  Description: 'Description',
+  Price: 'Price',
+  Status: 'Status',
+  'Add to cart': 'Add to cart',
+  'Customer Reviews': 'Customer Reviews',
+  'Leave your review': 'Leave your review',
+  "Enter comment": "Enter comment",
+  Submit: 'Submit',
+  Please: 'Please ',
+  login: 'login',
+  'to write a review': ' to write a review',
+}
+
 export default function ProductScreen(props) {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
@@ -72,14 +91,14 @@ export default function ProductScreen(props) {
   }, []);
 
   if (!product) {
-    return <div>Product Not Found</div>;
+    return <div>{lang['Product Not Found']}</div>;
   }
   const addToCartHandler = async () => {
     const existItem = state.cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${product._id}`);
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert(lang['Sorry. Product is out of stock']);
       return;
     }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
@@ -91,7 +110,7 @@ export default function ProductScreen(props) {
       <div className={classes.section}>
         <NextLink href="/" passHref>
           <Link>
-            <Typography>back to products</Typography>
+            <Typography>{lang['back to products']}</Typography>
           </Link>
         </NextLink>
       </div>
@@ -113,10 +132,10 @@ export default function ProductScreen(props) {
               </Typography>
             </ListItem>
             <ListItem>
-              <Typography>Category: {product.category}</Typography>
+              <Typography>{lang.Category}: {product.category}</Typography>
             </ListItem>
             <ListItem>
-              <Typography>Brand: {product.brand}</Typography>
+              <Typography>{lang.Brand}: {product.brand}</Typography>
             </ListItem>
             <ListItem>
               <Rating value={product.rating} readOnly></Rating>
@@ -125,7 +144,7 @@ export default function ProductScreen(props) {
               </Link>
             </ListItem>
             <ListItem>
-              <Typography> Description: {product.description}</Typography>
+              <Typography> {lang.Description}: {product.description}</Typography>
             </ListItem>
           </List>
         </Grid>
@@ -135,7 +154,7 @@ export default function ProductScreen(props) {
               <ListItem>
                 <Grid container>
                   <Grid item xs={6}>
-                    <Typography>Price</Typography>
+                    <Typography>{lang.Price}</Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <Typography>${product.price}</Typography>
@@ -145,7 +164,7 @@ export default function ProductScreen(props) {
               <ListItem>
                 <Grid container>
                   <Grid item xs={6}>
-                    <Typography>Status</Typography>
+                    <Typography>{lang.Status}</Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <Typography>
@@ -161,7 +180,7 @@ export default function ProductScreen(props) {
                   color="primary"
                   onClick={addToCartHandler}
                 >
-                  Add to cart
+                  {lang['Add to cart']}
                 </Button>
               </ListItem>
             </List>
@@ -171,7 +190,7 @@ export default function ProductScreen(props) {
       <List>
         <ListItem>
           <Typography name="reviews" id="reviews" variant="h2">
-            Customer Reviews
+            {lang['Customer Reviews']}
           </Typography>
         </ListItem>
         {reviews.length === 0 && <ListItem>No review</ListItem>}
@@ -196,7 +215,7 @@ export default function ProductScreen(props) {
             <form onSubmit={submitHandler} className={classes.reviewForm}>
               <List>
                 <ListItem>
-                  <Typography variant="h2">Leave your review</Typography>
+                  <Typography variant="h2">{lang['Leave your review']}</Typography>
                 </ListItem>
                 <ListItem>
                   <TextField
@@ -204,7 +223,7 @@ export default function ProductScreen(props) {
                     variant="outlined"
                     fullWidth
                     name="review"
-                    label="Enter comment"
+                    label={lang["Enter comment"]}
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                   />
@@ -223,7 +242,7 @@ export default function ProductScreen(props) {
                     variant="contained"
                     color="primary"
                   >
-                    Submit
+                    {lang.Submit}
                   </Button>
 
                   {loading && <CircularProgress></CircularProgress>}
@@ -232,11 +251,11 @@ export default function ProductScreen(props) {
             </form>
           ) : (
             <Typography variant="h2">
-              Please{' '}
+              {lang.Please}
               <Link href={`/login?redirect=/product/${product.slug}`}>
-                login
+                {lang.login}
               </Link>{' '}
-              to write a review
+              {lang['to write a review']}
             </Typography>
           )}
         </ListItem>

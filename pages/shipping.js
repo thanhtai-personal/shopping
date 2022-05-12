@@ -14,6 +14,27 @@ import Cookies from 'js-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import CheckoutWizard from '../components/CheckoutWizard';
 
+const lang = {
+  "Shipping Address": "Shipping Address",
+  "Full Name": "Full Name",
+  'Full Name length is more than 1': 'Full Name length is more than 1',
+  'Full Name is required': 'Full Name is required',
+  Address: 'Address',
+  'Address length is more than 1': 'Address length is more than 1',
+  'Address is required': 'Address is required',
+  City: 'City',
+  'City length is more than 1': 'City length is more than 1',
+  'City is required': 'City is required',
+  "Postal Code": "Postal Code",
+  'Postal Code length is more than 1': 'Postal Code length is more than 1',
+  'Postal Code is required': 'Postal Code is required',
+  Country: "Country",
+  'Country length is more than 1': 'Country length is more than 1',
+  'Country is required': 'Country is required',
+  'Choose on map': 'Choose on map',
+  Continue: 'Continue'
+}
+
 export default function Shipping() {
   const {
     handleSubmit,
@@ -78,11 +99,11 @@ export default function Shipping() {
     router.push('/map');
   };
   return (
-    <Layout title="Shipping Address">
+    <Layout title={lang["Shipping Address"]}>
       <CheckoutWizard activeStep={1} />
       <form onSubmit={handleSubmit(submitHandler)} className={classes.form}>
         <Typography component="h1" variant="h1">
-          Shipping Address
+          {lang['Shipping Address']}
         </Typography>
         <List>
           <ListItem>
@@ -99,13 +120,13 @@ export default function Shipping() {
                   variant="outlined"
                   fullWidth
                   id="fullName"
-                  label="Full Name"
+                  label={lang["Full Name"]}
                   error={Boolean(errors.fullName)}
                   helperText={
                     errors.fullName
                       ? errors.fullName.type === 'minLength'
-                        ? 'Full Name length is more than 1'
-                        : 'Full Name is required'
+                        ? lang['Full Name length is more than 1']
+                        : lang['Full Name is required']
                       : ''
                   }
                   {...field}
@@ -127,13 +148,13 @@ export default function Shipping() {
                   variant="outlined"
                   fullWidth
                   id="address"
-                  label="Address"
+                  label={lang.Address}
                   error={Boolean(errors.address)}
                   helperText={
                     errors.address
                       ? errors.address.type === 'minLength'
-                        ? 'Address length is more than 1'
-                        : 'Address is required'
+                        ? lang['Address length is more than 1']
+                        : lang['Address is required']
                       : ''
                   }
                   {...field}
@@ -155,13 +176,13 @@ export default function Shipping() {
                   variant="outlined"
                   fullWidth
                   id="city"
-                  label="City"
+                  label={lang.City}
                   error={Boolean(errors.city)}
                   helperText={
                     errors.city
                       ? errors.city.type === 'minLength'
-                        ? 'City length is more than 1'
-                        : 'City is required'
+                        ? lang['City length is more than 1']
+                        : lang['City is required']
                       : ''
                   }
                   {...field}
@@ -183,13 +204,13 @@ export default function Shipping() {
                   variant="outlined"
                   fullWidth
                   id="postalCode"
-                  label="Postal Code"
+                  label={lang["Postal Code"]}
                   error={Boolean(errors.postalCode)}
                   helperText={
                     errors.postalCode
                       ? errors.postalCode.type === 'minLength'
-                        ? 'Postal Code length is more than 1'
-                        : 'Postal Code is required'
+                        ? lang['Postal Code length is more than 1']
+                        : lang['Postal Code is required']
                       : ''
                   }
                   {...field}
@@ -211,13 +232,13 @@ export default function Shipping() {
                   variant="outlined"
                   fullWidth
                   id="country"
-                  label="Country"
+                  label={lang.Country}
                   error={Boolean(errors.country)}
                   helperText={
                     errors.country
                       ? errors.country.type === 'minLength'
-                        ? 'Country length is more than 1'
-                        : 'Country is required'
+                        ? lang['Country length is more than 1']
+                        : lang['Country is required']
                       : ''
                   }
                   {...field}
@@ -231,7 +252,7 @@ export default function Shipping() {
               type="button"
               onClick={chooseLocationHandler}
             >
-              Choose on map
+              {lang['Choose on map']}
             </Button>
             <Typography>
               {location.lat && `${location.lat}, ${location.lat}`}
@@ -239,7 +260,7 @@ export default function Shipping() {
           </ListItem>
           <ListItem>
             <Button variant="contained" type="submit" fullWidth color="primary">
-              Continue
+              {lang.Continue}
             </Button>
           </ListItem>
         </List>

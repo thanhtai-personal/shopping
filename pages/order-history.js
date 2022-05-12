@@ -37,6 +37,22 @@ function reducer(state, action) {
   }
 }
 
+const lang = {
+  orderHistory: 'Order History',
+  userProfile: 'User Profile',
+  ID: 'ID',
+  DATE: 'DATE',
+  TOTAL: 'TOTAL',
+  PAID: 'PAID',
+  DELIVERED: 'DELIVERED',
+  ACTION: 'ACTION',
+  paidAt: 'paid at',
+  notPaid: 'not paid',
+  deliveredAt: 'delivered at',
+  notDelivered: 'not delivered',
+  Details: 'Details',
+}
+
 function OrderHistory() {
   const { state } = useContext(Store);
   const router = useRouter();
@@ -67,19 +83,19 @@ function OrderHistory() {
     fetchOrders();
   }, []);
   return (
-    <Layout title="Order History">
+    <Layout title={lang.orderHistory}>
       <Grid container spacing={1}>
         <Grid item md={3} xs={12}>
           <Card className={classes.section}>
             <List>
               <NextLink href="/profile" passHref>
                 <ListItem button component="a">
-                  <ListItemText primary="User Profile"></ListItemText>
+                  <ListItemText primary={lang.userProfile}></ListItemText>
                 </ListItem>
               </NextLink>
               <NextLink href="/order-history" passHref>
                 <ListItem selected button component="a">
-                  <ListItemText primary="Order History"></ListItemText>
+                  <ListItemText primary={lang.orderHistory}></ListItemText>
                 </ListItem>
               </NextLink>
             </List>
@@ -90,7 +106,7 @@ function OrderHistory() {
             <List>
               <ListItem>
                 <Typography component="h1" variant="h1">
-                  Order History
+                  {lang.orderHistory}
                 </Typography>
               </ListItem>
               <ListItem>
@@ -103,12 +119,12 @@ function OrderHistory() {
                     <Table>
                       <TableHead>
                         <TableRow>
-                          <TableCell>ID</TableCell>
-                          <TableCell>DATE</TableCell>
-                          <TableCell>TOTAL</TableCell>
-                          <TableCell>PAID</TableCell>
-                          <TableCell>DELIVERED</TableCell>
-                          <TableCell>ACTION</TableCell>
+                          <TableCell>{lang.ID}</TableCell>
+                          <TableCell>{lang.DATE}</TableCell>
+                          <TableCell>{lang.TOTAL}</TableCell>
+                          <TableCell>{lang.PAID}</TableCell>
+                          <TableCell>{lang.DELIVERED}</TableCell>
+                          <TableCell>{lang.ACTION}</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -119,17 +135,17 @@ function OrderHistory() {
                             <TableCell>${order.totalPrice}</TableCell>
                             <TableCell>
                               {order.isPaid
-                                ? `paid at ${order.paidAt}`
-                                : 'not paid'}
+                                ? `${lang.paidAt} ${order.paidAt}`
+                                : lang.notPaid}
                             </TableCell>
                             <TableCell>
                               {order.isDelivered
-                                ? `delivered at ${order.deliveredAt}`
-                                : 'not delivered'}
+                                ? `${lang.deliveredAt} ${order.deliveredAt}`
+                                : lang.notDelivered}
                             </TableCell>
                             <TableCell>
                               <NextLink href={`/order/${order._id}`} passHref>
-                                <Button variant="contained">Details</Button>
+                                <Button variant="contained">{lang.Details}</Button>
                               </NextLink>
                             </TableCell>
                           </TableRow>

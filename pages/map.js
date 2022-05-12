@@ -17,6 +17,13 @@ import { getError } from '../utils/error';
 const defaultLocation = { lat: 45.516, lng: -73.56 };
 const libs = ['places'];
 
+const lang = {
+  geoIsNotSupported: 'Geolocation is not supported by this browser',
+  locationSelectedSuccess: 'location selected successfully',
+  enterYourAddress: 'Enter your address',
+  confirm: 'Confirm'
+}
+
 function Map() {
   const router = useRouter();
   const classes = useStyles();
@@ -46,7 +53,7 @@ function Map() {
 
   const getUserCurrentLocation = () => {
     if (!navigator.geolocation) {
-      enqueueSnackbar('Geolocation is not supported by this browser', {
+      enqueueSnackbar(lang.geoIsNotSupported, {
         variant: 'error',
       });
     } else {
@@ -99,7 +106,7 @@ function Map() {
           googleAddressId: places[0].id,
         },
       });
-      enqueueSnackbar('location selected successfully', {
+      enqueueSnackbar(lang.locationSelectedSuccess, {
         variant: 'success',
       });
       router.push('/shipping');
@@ -124,9 +131,9 @@ function Map() {
             onPlacesChanged={onPlacesChanged}
           >
             <div className={classes.mapInputBox}>
-              <input type="text" placeholder="Enter your address"></input>
+              <input type="text" placeholder={lang.enterYourAddress}></input>
               <button type="button" className="primary" onClick={onConfirm}>
-                Confirm
+                {lang.confirm}
               </button>
             </div>
           </StandaloneSearchBox>

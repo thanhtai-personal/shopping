@@ -35,6 +35,17 @@ export default function Login() {
     }
   }, []);
 
+  const lang = {
+    register: 'Register',
+    login: 'Login',
+    emailIsNotValid: 'Email is not valid',
+    emailIsRequired: 'Email is required',
+    password: 'Password',
+    passwordIsRequired: 'Password is required',
+    passwordMoreThan5: 'Password length is more than 5',
+    dontHaveAnAccount: 'Don\'t have an account?'
+  }
+
   const classes = useStyles();
   const submitHandler = async ({ email, password }) => {
     closeSnackbar();
@@ -54,7 +65,7 @@ export default function Login() {
     <Layout title="Login">
       <form onSubmit={handleSubmit(submitHandler)} className={classes.form}>
         <Typography component="h1" variant="h1">
-          Login
+          {lang.login}
         </Typography>
         <List>
           <ListItem>
@@ -77,8 +88,8 @@ export default function Login() {
                   helperText={
                     errors.email
                       ? errors.email.type === 'pattern'
-                        ? 'Email is not valid'
-                        : 'Email is required'
+                        ? lang.emailIsNotValid
+                        : lang.emailIsRequired
                       : ''
                   }
                   {...field}
@@ -100,14 +111,14 @@ export default function Login() {
                   variant="outlined"
                   fullWidth
                   id="password"
-                  label="Password"
+                  label={lang.password}
                   inputProps={{ type: 'password' }}
                   error={Boolean(errors.password)}
                   helperText={
                     errors.password
                       ? errors.password.type === 'minLength'
-                        ? 'Password length is more than 5'
-                        : 'Password is required'
+                        ? lang.passwordMoreThan5
+                        : lang.passwordIsRequired
                       : ''
                   }
                   {...field}
@@ -117,13 +128,13 @@ export default function Login() {
           </ListItem>
           <ListItem>
             <Button variant="contained" type="submit" fullWidth color="primary">
-              Login
+              {lang.login}
             </Button>
           </ListItem>
           <ListItem>
-            Don&apos;t have an account? &nbsp;
+            {lang.dontHaveAnAccount}
             <NextLink href={`/register?redirect=${redirect || '/'}`} passHref>
-              <Link>Register</Link>
+              <Link>{lang.register}</Link>
             </NextLink>
           </ListItem>
         </List>

@@ -61,6 +61,30 @@ function reducer(state, action) {
   }
 }
 
+const lang = {
+  'Order is delivered': 'Order is delivered',
+  Order: 'Order',
+  'Shipping Address': 'Shipping Address',
+  'Show On Map': 'Show On Map',
+  Status: 'Status',
+  'Payment Method': 'Payment Method',
+  'paid at': 'paid at',
+  'not paid': 'not paid',
+  'delivered at': 'delivered at',
+  'not delivered': 'not delivered',
+  'Order Items': 'Order Items',
+  Image: 'Image',
+  Name: 'Name',
+  Quantity: 'Quantity',
+  Price: 'Price',
+  'Order Summary': 'Order Summary',
+  Items: 'Items',
+  Tax: 'Tax',
+  Shipping: 'Shipping',
+  Total: 'Total',
+  'Deliver Order': 'Deliver Order',
+}
+
 function Order({ params }) {
   const orderId = params.id;
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
@@ -186,7 +210,7 @@ function Order({ params }) {
         }
       );
       dispatch({ type: 'DELIVER_SUCCESS', payload: data });
-      enqueueSnackbar('Order is delivered', { variant: 'success' });
+      enqueueSnackbar(lang['Order is delivered'], { variant: 'success' });
     } catch (err) {
       dispatch({ type: 'DELIVER_FAIL', payload: getError(err) });
       enqueueSnackbar(getError(err), { variant: 'error' });
@@ -194,9 +218,9 @@ function Order({ params }) {
   }
 
   return (
-    <Layout title={`Order ${orderId}`}>
+    <Layout title={`${lang.Order} ${orderId}`}>
       <Typography component="h1" variant="h1">
-        Order {orderId}
+        {lang.Order} {orderId}
       </Typography>
       {loading ? (
         <CircularProgress />
@@ -209,7 +233,7 @@ function Order({ params }) {
               <List>
                 <ListItem>
                   <Typography component="h2" variant="h2">
-                    Shipping Address
+                    {lang['Shipping Address']}
                   </Typography>
                 </ListItem>
                 <ListItem>
@@ -223,15 +247,15 @@ function Order({ params }) {
                       target="_new"
                       href={`https://maps.google.com?q=${shippingAddress.location.lat},${shippingAddress.location.lng}`}
                     >
-                      Show On Map
+                      {lang['Show On Map']}
                     </Link>
                   )}
                 </ListItem>
                 <ListItem>
-                  Status:{' '}
+                  {lang.Status}:{' '}
                   {isDelivered
-                    ? `delivered at ${deliveredAt}`
-                    : 'not delivered'}
+                    ? `${lang['delivered at']} ${deliveredAt}`
+                    : lang['not delivered']}
                 </ListItem>
               </List>
             </Card>
@@ -239,12 +263,12 @@ function Order({ params }) {
               <List>
                 <ListItem>
                   <Typography component="h2" variant="h2">
-                    Payment Method
+                    {lang['Payment Method']}
                   </Typography>
                 </ListItem>
                 <ListItem>{paymentMethod}</ListItem>
                 <ListItem>
-                  Status: {isPaid ? `paid at ${paidAt}` : 'not paid'}
+                  {lang.Status}: {isPaid ? `${lang['paid at']} ${paidAt}` : lang['not paid']}
                 </ListItem>
               </List>
             </Card>
@@ -252,7 +276,7 @@ function Order({ params }) {
               <List>
                 <ListItem>
                   <Typography component="h2" variant="h2">
-                    Order Items
+                    {lang['Order Items']}
                   </Typography>
                 </ListItem>
                 <ListItem>
@@ -260,10 +284,10 @@ function Order({ params }) {
                     <Table>
                       <TableHead>
                         <TableRow>
-                          <TableCell>Image</TableCell>
-                          <TableCell>Name</TableCell>
-                          <TableCell align="right">Quantity</TableCell>
-                          <TableCell align="right">Price</TableCell>
+                          <TableCell>{lang.Image}</TableCell>
+                          <TableCell>{lang.Name}</TableCell>
+                          <TableCell align="right">{lang.Quantity}</TableCell>
+                          <TableCell align="right">{lang.Price}</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -308,12 +332,12 @@ function Order({ params }) {
             <Card className={classes.section}>
               <List>
                 <ListItem>
-                  <Typography variant="h2">Order Summary</Typography>
+                  <Typography variant="h2">{lang['Order Summary']}</Typography>
                 </ListItem>
                 <ListItem>
                   <Grid container>
                     <Grid item xs={6}>
-                      <Typography>Items:</Typography>
+                      <Typography>{lang.Items}:</Typography>
                     </Grid>
                     <Grid item xs={6}>
                       <Typography align="right">${itemsPrice}</Typography>
@@ -323,7 +347,7 @@ function Order({ params }) {
                 <ListItem>
                   <Grid container>
                     <Grid item xs={6}>
-                      <Typography>Tax:</Typography>
+                      <Typography>{lang.Tax}:</Typography>
                     </Grid>
                     <Grid item xs={6}>
                       <Typography align="right">${taxPrice}</Typography>
@@ -333,7 +357,7 @@ function Order({ params }) {
                 <ListItem>
                   <Grid container>
                     <Grid item xs={6}>
-                      <Typography>Shipping:</Typography>
+                      <Typography>{lang.Shipping}:</Typography>
                     </Grid>
                     <Grid item xs={6}>
                       <Typography align="right">${shippingPrice}</Typography>
@@ -344,7 +368,7 @@ function Order({ params }) {
                   <Grid container>
                     <Grid item xs={6}>
                       <Typography>
-                        <strong>Total:</strong>
+                        <strong>{lang.Total}:</strong>
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
@@ -378,7 +402,7 @@ function Order({ params }) {
                       color="primary"
                       onClick={deliverOrderHandler}
                     >
-                      Deliver Order
+                      {lang['Deliver Order']}
                     </Button>
                   </ListItem>
                 )}

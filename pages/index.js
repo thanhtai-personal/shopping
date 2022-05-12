@@ -12,6 +12,10 @@ import ProductItem from '../components/ProductItem';
 import Carousel from 'react-material-ui-carousel';
 import useStyles from '../utils/styles';
 
+const lang = {
+  outOfStoke: 'Sorry. Product is out of stock'
+}
+
 export default function Home(props) {
   const classes = useStyles();
   const router = useRouter();
@@ -22,7 +26,7 @@ export default function Home(props) {
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${product._id}`);
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert(lang.outOfStoke);
       return;
     }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });

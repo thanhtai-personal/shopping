@@ -24,6 +24,17 @@ import {
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
+const lang = {
+  outOfStoke: 'Sorry. Product is out of stock',
+  goShopping: 'Go shopping',
+  Quantity: 'Quantity',
+  Price: 'Price',
+  Action: 'Action',
+  cardIsEmpry: 'Cart is empty ',
+  checkOut: 'Check Out',
+  shoppingCart: 'Shopping Cart',
+}
+
 function CartScreen() {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
@@ -33,7 +44,7 @@ function CartScreen() {
   const updateCartHandler = async (item, quantity) => {
     const { data } = await axios.get(`/api/products/${item._id}`);
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert(lang.outOfStoke);
       return;
     }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
@@ -45,15 +56,15 @@ function CartScreen() {
     router.push('/shipping');
   };
   return (
-    <Layout title="Shopping Cart">
+    <Layout title={lang.shoppingCart}>
       <Typography component="h1" variant="h1">
-        Shopping Cart
+        {lang.shoppingCart}
       </Typography>
       {cartItems.length === 0 ? (
         <div>
-          Cart is empty.{' '}
+          {lang.cardIsEmpry}
           <NextLink href="/" passHref>
-            <Link>Go shopping</Link>
+            <Link>{lang.goShopping}</Link>
           </NextLink>
         </div>
       ) : (
@@ -65,9 +76,9 @@ function CartScreen() {
                   <TableRow>
                     <TableCell>Image</TableCell>
                     <TableCell>Name</TableCell>
-                    <TableCell align="right">Quantity</TableCell>
-                    <TableCell align="right">Price</TableCell>
-                    <TableCell align="right">Action</TableCell>
+                    <TableCell align="right">{lang.Quantity}</TableCell>
+                    <TableCell align="right">{lang.Price}</TableCell>
+                    <TableCell align="right">{lang.Action}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -140,7 +151,7 @@ function CartScreen() {
                     color="primary"
                     fullWidth
                   >
-                    Check Out
+                    {lang.checkOut}
                   </Button>
                 </ListItem>
               </List>

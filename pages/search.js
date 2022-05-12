@@ -23,6 +23,24 @@ import { Pagination } from '@material-ui/lab';
 
 const PAGE_SIZE = 3;
 
+const lang = {
+  'Sorry. Product is out of stock': 'Sorry. Product is out of stock',
+  Search: 'Search',
+  Categories: 'Categories',
+  Brands: 'Brands',
+  Prices: 'Prices',
+  Ratings: 'Ratings',
+  Up: 'Up',
+  Results: 'Results',
+  No: 'No',
+  'Sort by': 'Sort by',
+  Featured: 'Featured',
+  'Price: Low to High': 'Price: Low to High',
+  'Price: High to Low': 'Price: High to Low',
+  'Customer Reviews': 'Customer Reviews',
+  'Newest Arrivals': 'Newest Arrivals',
+}
+
 const prices = [
   {
     name: '$1 to $50',
@@ -106,20 +124,20 @@ export default function Search(props) {
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${product._id}`);
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert(lang['Sorry. Product is out of stock']);
       return;
     }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
     router.push('/cart');
   };
   return (
-    <Layout title="Search">
+    <Layout title={lang.Search}>
       <Grid className={classes.mt1} container spacing={1}>
         <Grid item md={3}>
           <List>
             <ListItem>
               <Box className={classes.fullWidth}>
-                <Typography>Categories</Typography>
+                <Typography>{lang.Categories}</Typography>
                 <Select fullWidth value={category} onChange={categoryHandler}>
                   <MenuItem value="all">All</MenuItem>
                   {categories &&
@@ -133,7 +151,7 @@ export default function Search(props) {
             </ListItem>
             <ListItem>
               <Box className={classes.fullWidth}>
-                <Typography>Brands</Typography>
+                <Typography>{lang.Brands}</Typography>
                 <Select value={brand} onChange={brandHandler} fullWidth>
                   <MenuItem value="all">All</MenuItem>
                   {brands &&
@@ -147,7 +165,7 @@ export default function Search(props) {
             </ListItem>
             <ListItem>
               <Box className={classes.fullWidth}>
-                <Typography>Prices</Typography>
+                <Typography>{lang.Prices}</Typography>
                 <Select value={price} onChange={priceHandler} fullWidth>
                   <MenuItem value="all">All</MenuItem>
                   {prices.map((price) => (
@@ -160,13 +178,13 @@ export default function Search(props) {
             </ListItem>
             <ListItem>
               <Box className={classes.fullWidth}>
-                <Typography>Ratings</Typography>
+                <Typography>{lang.Ratings}</Typography>
                 <Select value={rating} onChange={ratingHandler} fullWidth>
                   <MenuItem value="all">All</MenuItem>
                   {ratings.map((rating) => (
                     <MenuItem dispaly="flex" key={rating} value={rating}>
                       <Rating value={rating} readOnly />
-                      <Typography component="span">&amp; Up</Typography>
+                      <Typography component="span">&amp; {lang.Up}</Typography>
                     </MenuItem>
                   ))}
                 </Select>
@@ -177,7 +195,7 @@ export default function Search(props) {
         <Grid item md={9}>
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
-              {products.length === 0 ? 'No' : countProducts} Results
+              {products.length === 0 ? lang.No : countProducts} {lang.Results}
               {query !== 'all' && query !== '' && ' : ' + query}
               {category !== 'all' && ' : ' + category}
               {brand !== 'all' && ' : ' + brand}
@@ -195,14 +213,14 @@ export default function Search(props) {
             </Grid>
             <Grid item>
               <Typography component="span" className={classes.sort}>
-                Sort by
+                {lang['Sort by']}
               </Typography>
               <Select value={sort} onChange={sortHandler}>
-                <MenuItem value="featured">Featured</MenuItem>
-                <MenuItem value="lowest">Price: Low to High</MenuItem>
-                <MenuItem value="highest">Price: High to Low</MenuItem>
-                <MenuItem value="toprated">Customer Reviews</MenuItem>
-                <MenuItem value="newest">Newest Arrivals</MenuItem>
+                <MenuItem value="featured">{lang.Featured}</MenuItem>
+                <MenuItem value="lowest">{lang['Price: Low to High']}</MenuItem>
+                <MenuItem value="highest">{lang['Price: High to Low']}</MenuItem>
+                <MenuItem value="toprated">{lang['Customer Reviews']}</MenuItem>
+                <MenuItem value="newest">{lang['Newest Arrivals']}</MenuItem>
               </Select>
             </Grid>
           </Grid>

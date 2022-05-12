@@ -28,6 +28,21 @@ import { useSnackbar } from 'notistack';
 import { getError } from '../utils/error';
 import Cookies from 'js-cookie';
 
+const lang = {
+  'Place Order': 'Place Order',
+  'Shipping Address': 'Shipping Address',
+  'Payment Method': 'Payment Method',
+  'Order Items': 'Order Items',
+  Image: 'Image',
+  Quantity: 'Quantity',
+  Price: 'Price',
+  Items: 'Items',
+  Tax: 'Tax',
+  Shipping: 'Shipping',
+  Total: 'Total',
+  'Place Order': 'Place Order',
+}
+
 function PlaceOrder() {
   const classes = useStyles();
   const router = useRouter();
@@ -85,10 +100,10 @@ function PlaceOrder() {
     }
   };
   return (
-    <Layout title="Place Order">
+    <Layout title={lang['Place Order']}>
       <CheckoutWizard activeStep={3}></CheckoutWizard>
       <Typography component="h1" variant="h1">
-        Place Order
+        {lang['Place Order']}
       </Typography>
 
       <Grid container spacing={1}>
@@ -97,7 +112,7 @@ function PlaceOrder() {
             <List>
               <ListItem>
                 <Typography component="h2" variant="h2">
-                  Shipping Address
+                  {lang['Shipping Address']}
                 </Typography>
               </ListItem>
               <ListItem>
@@ -111,7 +126,7 @@ function PlaceOrder() {
             <List>
               <ListItem>
                 <Typography component="h2" variant="h2">
-                  Payment Method
+                  {lang['Payment Method']}
                 </Typography>
               </ListItem>
               <ListItem>{paymentMethod}</ListItem>
@@ -121,7 +136,7 @@ function PlaceOrder() {
             <List>
               <ListItem>
                 <Typography component="h2" variant="h2">
-                  Order Items
+                  {lang['Order Items']}
                 </Typography>
               </ListItem>
               <ListItem>
@@ -129,10 +144,10 @@ function PlaceOrder() {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell>Image</TableCell>
+                        <TableCell>{lang.Image}</TableCell>
                         <TableCell>Name</TableCell>
-                        <TableCell align="right">Quantity</TableCell>
-                        <TableCell align="right">Price</TableCell>
+                        <TableCell align="right">{lang.Quantity}</TableCell>
+                        <TableCell align="right">{lang.Price}</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -182,7 +197,7 @@ function PlaceOrder() {
               <ListItem>
                 <Grid container>
                   <Grid item xs={6}>
-                    <Typography>Items:</Typography>
+                    <Typography>{lang.Items}:</Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <Typography align="right">${itemsPrice}</Typography>
@@ -192,7 +207,7 @@ function PlaceOrder() {
               <ListItem>
                 <Grid container>
                   <Grid item xs={6}>
-                    <Typography>Tax:</Typography>
+                    <Typography>{lang.Tax}:</Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <Typography align="right">${taxPrice}</Typography>
@@ -202,7 +217,7 @@ function PlaceOrder() {
               <ListItem>
                 <Grid container>
                   <Grid item xs={6}>
-                    <Typography>Shipping:</Typography>
+                    <Typography>{lang.Shipping}:</Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <Typography align="right">${shippingPrice}</Typography>
@@ -213,7 +228,7 @@ function PlaceOrder() {
                 <Grid container>
                   <Grid item xs={6}>
                     <Typography>
-                      <strong>Total:</strong>
+                      <strong>{lang.Total}:</strong>
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
@@ -230,7 +245,7 @@ function PlaceOrder() {
                   color="primary"
                   fullWidth
                 >
-                  Place Order
+                  {lang['Place Order']}
                 </Button>
               </ListItem>
               {loading && (
